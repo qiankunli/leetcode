@@ -1,6 +1,8 @@
 package split
 
-import "math"
+import (
+	"math"
+)
 
 func Split() []int {
 	total := 100
