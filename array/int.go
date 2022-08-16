@@ -15,6 +15,12 @@ func max(l, r int) int {
 	}
 	return r
 }
+func min(l, r int) int {
+	if l < r {
+		return l
+	}
+	return r
+}
 func abs(l int) int {
 	if l < 0 {
 		return -l

@@ -10,7 +10,7 @@ type Queue struct {
 
 func NewQueue(capacity int) *Queue {
 	return &Queue{
-		values:   make([]int, capacity+1),
+		values:   make([]int, capacity),
 		capacity: capacity,
 	}
 }

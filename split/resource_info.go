@@ -130,20 +130,6 @@ func (r *Resource) Add(rr *Resource) *Resource {
 	return r
 }
 
-// Add is used to add two given resources
-func (r *Resource) Cost(rr *Resource) float64 {
-	costCpu := math.Pow(r.MilliCPU-rr.MilliCPU, 2)
-	costMem := math.Pow(r.Memory-rr.Memory, 2)
-	cost := costCpu + costMem
-	for rName, rQuant := range rr.ScalarResources {
-		if r.ScalarResources == nil {
-			r.ScalarResources = map[string]float64{}
-		}
-		cost += math.Pow(r.ScalarResources[rName]-rQuant, 2)
-	}
-	return cost
-}
-
 // Sub subtracts two Resource objects with assertion.
 func (r *Resource) Sub(rr *Resource) *Resource {
 	return r.sub(rr)

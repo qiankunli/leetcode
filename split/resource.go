@@ -10,6 +10,20 @@ import (
 
 func Cal(total *Resource, guarantees, capacities, requests []*Resource, weights []int, queue_num, try_num int) {
 
+	/**
+	1. 计算weight_resources
+	2. 先确保 各个queue 得到guarantee，剩下的remaining 用于在各个queue 二次分配
+	3. 将 remaining 随机分为 queue_num 份分给每个queue，并保证 每个queue的resource 在 [guarantee,capacity] 范围内
+		1. 将remaining 随机分成 queue_num 份 分给每个queue
+		2. 每个queue 此时的资源 = 随机从remaining 分得的一份 split + guarantee，split + guarantee可能超过queue的capacity
+		3. 如果超过，则将多出来的部分 extra = split + guarantee - capacity，匀给下一个queue，知道最后一个queue
+	4. 计算本次随机分配的cost，cost 由 costw 和 costr 组成
+		1. costw 表示 本次分配与 weight_resources 的距离，数学上为 两个张量的距离，有多种计算策略，示例中使用欧拉距离
+		2. costr 表示 本次分配与 request 的距离
+		3. cost = ww * costw + wr * costr， 通过ww 和 wr的值，可以控制更希望 贴合weight_resources 还是request
+	5. 重复第3,4 步 try_num次，记录最小成本时的分配方案，即为最终分配方案。try_num 次数越多，效果越好。
+	*/
+	// 根据weight 比例 计算每个queue 对应的 weight_resources
 	weight_sum := sum(weights)
 	weight_resources := make([]*Resource, 0)
 	for _, w := range weights {
@@ -20,11 +34,15 @@ func Cal(total *Resource, guarantees, capacities, requests []*Resource, weights 
 	for queue := 0; queue < queue_num; queue++ {
 		total_guarantees.Add(guarantees[queue])
 	}
+	// 计算 remaining
 	remaining := total.Clone().sub(total_guarantees)
 	min := math.MaxFloat64
 	var d []*Resource
+	// 找到 try_num 次随机分配方案中 cost 最小的方案
 	for i := 0; i < try_num; i++ {
+		// 一次随机分配
 		deserves := try(remaining.Clone(), guarantees, capacities, queue_num)
+		// 计算此次随机分配的cost
 		costw := cost(deserves, weight_resources)
 		costr := cost(deserves, requests)
 		cost := costw + 2*costr
@@ -36,6 +54,8 @@ func Cal(total *Resource, guarantees, capacities, requests []*Resource, weights 
 	fmt.Println(d)
 
 }
+
+// 将 remaining 随机分为 queue_num 份分给每个queue，并保证 每个queue的resource 在 [guarantee,capacity] 范围内
 func try(remaining *Resource, guarantees, capacities []*Resource, queue_num int) []*Resource {
 	deserves := make([]*Resource, 0)
 	splits := split(remaining, queue_num)
@@ -58,6 +78,8 @@ func mix(extra, split, guarantee, capacity *Resource) (*Resource, *Resource) {
 	d := deserve.MinDimensionResource(capacity, Infinity)
 	return d, deserve.Sub(d)
 }
+
+// 将remaining 随机分成 queue_num 份儿
 func split(remaining *Resource, queue_num int) []*Resource {
 	result := make([]*Resource, 0)
 	cpuSplit := RandomNumFloat64(remaining.MilliCPU, queue_num, 1)
@@ -91,6 +113,19 @@ func cost(l, r []*Resource) float64 {
 	cost := 0.0
 	for i := 0; i < len(l); i++ {
 		cost += l[i].Cost(r[i])
+	}
+	return cost
+}
+
+func (r *Resource) Cost(rr *Resource) float64 {
+	costCpu := math.Pow(r.MilliCPU-rr.MilliCPU, 2)
+	costMem := math.Pow(r.Memory-rr.Memory, 2)
+	cost := costCpu + costMem
+	for rName, rQuant := range rr.ScalarResources {
+		if r.ScalarResources == nil {
+			r.ScalarResources = map[string]float64{}
+		}
+		cost += math.Pow(r.ScalarResources[rName]-rQuant, 2)
 	}
 	return cost
 }

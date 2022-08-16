@@ -27,3 +27,7 @@ func TestTraverseChildArrayWithCondition(t *testing.T) {
 			//fmt.Println(nums)
 		})
 }
+func TestSlice(t *testing.T) {
+	array := []int{1, 2, 3, 4}
+	fmt.Println(array[0:2])
+}
