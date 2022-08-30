@@ -1,6 +1,8 @@
 package linkedlist
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type ListNode struct {
 	Val  int
@@ -92,6 +94,36 @@ func TraverseKList2(head *ListNode, k int, handler func(head, tail *ListNode, le
 			count = 0
 		}
 	})
+}
+func Mid(l *ListNode) *ListNode {
+	if l == nil {
+		return nil
+	}
+	if l.Next == nil {
+		return l
+	}
+	p := l
+	q := l
+	if p.Next != nil {
+		p = p.Next.Next
+	}
+	for p != nil && p.Next != nil {
+		q = q.Next
+		p = p.Next.Next
+	}
+	return q
+}
+func Len(l *ListNode) int {
+	if l == nil {
+		return 0
+	}
+	c := 0
+	cur := l
+	for cur != nil {
+		c++
+		cur = cur.Next
+	}
+	return c
 }
 
 func Print(l *ListNode) {

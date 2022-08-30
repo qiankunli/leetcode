@@ -38,6 +38,44 @@ func sum(nums []int) int {
 	}
 	return sum
 }
+func equal(s1, s2 []int) bool {
+	if s1 == nil || s2 == nil {
+		return false
+	}
+	if len(s1) != len(s2) {
+		return false
+	}
+	for i := 0; i < len(s1); i++ {
+		if s1[i] != s2[i] {
+			return false
+		}
+	}
+	return true
+}
+func contains(s []int, target int) bool {
+	if len(s) == 0 {
+		return false
+	}
+	for _, l := range s {
+		if l == target {
+			return true
+		}
+	}
+	return false
+}
+func swap(values []int, left, right int) {
+	tmp := values[left]
+	values[left] = values[right]
+	values[right] = tmp
+}
+func containSlice(ss [][]int, s []int) bool {
+	for _, l := range ss {
+		if equal(l, s) {
+			return true
+		}
+	}
+	return false
+}
 func join(nums []int, sep string) string {
 	if len(nums) == 0 {
 		return ""

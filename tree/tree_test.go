@@ -48,3 +48,8 @@ func TestNewTree(t *testing.T) {
 	Print(root)
 
 }
+
+func TestCount2(t *testing.T) {
+	root := NewTree([]int{3, 1, 4, -1, 2}, -1)
+	fmt.Println(Count2(root, -1))
+}

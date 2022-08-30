@@ -2,6 +2,7 @@ package array
 
 import (
 	"fmt"
+	"math"
 	"testing"
 )
 
@@ -29,5 +30,12 @@ func TestTraverseChildArrayWithCondition(t *testing.T) {
 }
 func TestSlice(t *testing.T) {
 	array := []int{1, 2, 3, 4}
+
 	fmt.Println(array[0:2])
+	arrayCopy := make([]int, len(array))
+	copy(arrayCopy, array)
+	fmt.Println(arrayCopy)
+}
+func TestPow(t *testing.T) {
+	fmt.Println(math.Pow10(-2))
 }

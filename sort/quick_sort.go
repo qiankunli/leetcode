@@ -16,6 +16,7 @@ func move(values []int, left, right int) int {
 	i := left
 	j := right
 	for i < j {
+		// 右侧在前
 		for values[j] >= v && i < j {
 			j--
 		}

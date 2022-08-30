@@ -133,3 +133,27 @@ func BFS2(t *TreeNode, provider func() (int, int, int, int)) {
 		}
 	}
 }
+func Count(root *TreeNode) int {
+	if root == nil {
+		return 0
+	}
+	if root.Left == nil {
+		return 1 + Count(root.Right)
+	}
+	if root.Right == nil {
+		return 1 + Count(root.Left)
+	}
+	return 1 + Count(root.Left) + Count(root.Right)
+}
+func Count2(root *TreeNode, nullValue int) int {
+	if root == nil || root.Val == nullValue {
+		return 0
+	}
+	if root.Left == nil || root.Left.Val == nullValue {
+		return 1 + Count2(root.Right, nullValue)
+	}
+	if root.Right == nil || root.Right.Val == nullValue {
+		return 1 + Count2(root.Left, nullValue)
+	}
+	return 1 + Count2(root.Left, nullValue) + Count2(root.Right, nullValue)
+}
