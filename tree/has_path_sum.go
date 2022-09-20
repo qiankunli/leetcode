@@ -5,6 +5,8 @@ import "fmt"
 func HasPathSum(root *TreeNode, targetSum int) bool {
 	return hasPathSum(root, targetSum)
 }
+
+// 112
 func hasPathSum(root *TreeNode, targetSum int) bool {
 	return sumTree(root, 0, targetSum)
 }

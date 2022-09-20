@@ -5,7 +5,29 @@ import "math"
 func MaxSubArray(nums []int) int {
 	return maxSubArray(nums)
 }
+
+// 动态规划
 func maxSubArray(nums []int) int {
+	n := len(nums)
+	if n == 0 {
+		return 0
+	}
+	if n == 1 {
+		return nums[0]
+	}
+	dp := make([]int, n)
+	dp[0] = nums[0]
+	m := nums[0]
+	for i := 1; i < n; i++ {
+		dp[i] = max(dp[i-1]+nums[i], nums[i])
+		m = max(m, dp[i])
+	}
+	return m
+}
+
+// 53
+// 分治法
+func maxSubArray2(nums []int) int {
 	return doMaxSubArray(nums, 0, len(nums)-1)
 }
 func doMaxSubArray(nums []int, start, end int) int {
@@ -43,7 +65,7 @@ func doMaxSubArrayWithMid(nums []int, mid, start, end int) int {
 
 // 递归不过是遍历的另一种说法
 // 遍历连续字串的迭代方式
-func maxSubArray2(nums []int) int {
+func maxSubArray3(nums []int) int {
 	max := math.MinInt
 	for i := 0; i < len(nums); i++ {
 		sum := 0

@@ -53,3 +53,13 @@ func TestCount2(t *testing.T) {
 	root := NewTree([]int{3, 1, 4, -1, 2}, -1)
 	fmt.Println(Count2(root, -1))
 }
+
+func TestTraverse(t *testing.T) {
+	right2 := &TreeNode{Val: 5}
+	left2 := &TreeNode{Val: 4}
+	right1 := &TreeNode{Val: 3}
+	left1 := &TreeNode{Val: 2, Left: left2, Right: right2}
+	root := &TreeNode{Val: 1, Left: left1, Right: right1}
+	result := Traverse(root)
+	fmt.Println(result)
+}

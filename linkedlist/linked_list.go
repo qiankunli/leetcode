@@ -126,6 +126,28 @@ func Len(l *ListNode) int {
 	return c
 }
 
+// move 方法会改变 pre from to 关系，副作用很大
+func Move(pre, from, to *ListNode) {
+	if from == to || from == to.Next {
+		return
+	}
+	if pre == nil {
+		// from 移动 to 后面
+		next := to.Next
+		to.Next = from
+		from.Next = next
+	}
+
+	// pre 连到from 的后面
+	next := from.Next
+	pre.Next = next
+
+	// from 移动 to 后面
+	next = to.Next
+	to.Next = from
+	from.Next = next
+}
+
 func Print(l *ListNode) {
 	for l != nil {
 		fmt.Println(l.Val)

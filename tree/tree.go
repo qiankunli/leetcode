@@ -157,3 +157,29 @@ func Count2(root *TreeNode, nullValue int) int {
 	}
 	return 1 + Count2(root.Left, nullValue) + Count2(root.Right, nullValue)
 }
+
+func Traverse(root *TreeNode) [][]int {
+	if root == nil {
+		return nil
+	}
+	path := make([]int, 0)
+	result := make([][]int, 0)
+	var dfs func(root *TreeNode)
+	dfs = func(root *TreeNode) {
+		if root == nil { // 处理逻辑如果加在这里，会被处理两次
+			return
+		}
+		path = append(path, root.Val)
+		// 加逻辑的地方
+		if root.Left == nil && root.Right == nil {
+			pathCopy := make([]int, len(path))
+			copy(pathCopy, path)
+			result = append(result, pathCopy)
+		}
+		dfs(root.Left)
+		dfs(root.Right)
+		path = path[:len(path)-1]
+	}
+	dfs(root)
+	return result
+}

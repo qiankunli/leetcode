@@ -5,14 +5,30 @@ func LowestCommonAncestor(root, p, q *TreeNode) *TreeNode {
 }
 
 // 236
+// 后序遍历
+// 在root 里寻找 p 或q 如果找到则返回
 func lowestCommonAncestor(root, p, q *TreeNode) *TreeNode {
+	if root == nil {
+		return nil
+	}
 	if root == p || root == q {
 		return root
 	}
-	r, _ := doLowestCommonAncestor(root, p, q)
-	return r
+	left := lowestCommonAncestor(root.Left, p, q)
+	right := lowestCommonAncestor(root.Right, p, q)
+	if left == nil && right == nil { // 如果左右子树都没找到，说明没有
+		return nil
+	}
+	if left == nil {
+		return right // 右子树找到了
+	}
+	if right == nil {
+		return left // 左子树找到了
+	}
+	return root // 左右都找到了， 公共是根
 }
 
+// 之所以麻烦，之所以不好理解，就是没有掌握后序遍历，下面代码的本质是中序遍历
 func doLowestCommonAncestor(root, p, q *TreeNode) (*TreeNode, int) {
 
 	count := 0
