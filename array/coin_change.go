@@ -1,6 +1,8 @@
 package array
 
-import "math"
+import (
+	"math"
+)
 
 func CoinChange(coins []int, amount int) int {
 	return coinChange(coins, amount)

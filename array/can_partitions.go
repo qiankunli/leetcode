@@ -1,6 +1,8 @@
 package array
 
-import "sort"
+import (
+	"sort"
+)
 
 func CanPartition(nums []int) bool {
 	return canPartition3(nums)

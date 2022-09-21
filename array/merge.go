@@ -1,6 +1,8 @@
 package array
 
-import "sort"
+import (
+	"sort"
+)
 
 // 56
 func merge(intervals [][]int) [][]int {

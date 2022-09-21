@@ -6,7 +6,8 @@ func LowestCommonAncestor(root, p, q *TreeNode) *TreeNode {
 
 // 236
 // 后序遍历
-// 在root 里寻找 p 或q 如果找到则返回
+// 在root 里寻找 p 或q 如果找到则返回。以root 的视角看，如果pq 都在左子树，不管是p 还是q ，先找的的就是 最近公共祖先。
+// 如果一个在左 一个在右，根就是root
 func lowestCommonAncestor(root, p, q *TreeNode) *TreeNode {
 	if root == nil {
 		return nil

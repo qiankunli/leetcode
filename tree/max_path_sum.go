@@ -36,6 +36,3 @@ func max2(l, r int) int {
 	}
 	return r
 }
-func max3(l, m, r int) int {
-	return max2(l, max2(m, r))
-}

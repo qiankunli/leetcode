@@ -1,6 +1,8 @@
 package array
 
-import "math"
+import (
+	"math"
+)
 
 func LengthOfLIS(nums []int) int {
 	return lengthOfLIS(nums)

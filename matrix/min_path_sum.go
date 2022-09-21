@@ -1,6 +1,9 @@
-package array
+package matrix
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
 func MinPathSum(grid [][]int) int {
 	return minPathSum(grid)
@@ -16,6 +19,8 @@ func minPathSum(grid [][]int) int {
 		return sum(grid[0])
 	}
 	columns := len(grid[0])
+	// 从i都j 最小路径和
+	// dp[i][j] = min(dp[i][j-1]+grid[i-1][j-1], dp[i-1][j]+grid[i-1][j-1])  因为是倒着算的  dp[0][1] 实际用 dp[1][1] 表示，不然if else 比较多
 	dp := make([][]int, rows+1)
 	for i := 0; i <= rows; i++ {
 		dp[i] = make([]int, columns+1)
@@ -30,10 +35,52 @@ func minPathSum(grid [][]int) int {
 				dp[i][j] = dp[i-1][j] + grid[i-1][j-1]
 				continue
 			}
+			// 如果 是求最大值，上面的if else 就不用加了
 			dp[i][j] = min(dp[i][j-1]+grid[i-1][j-1], dp[i-1][j]+grid[i-1][j-1])
 		}
 	}
 	return dp[rows][columns]
+}
+
+func minPathSum3(grid [][]int) int {
+	rows := len(grid)
+	if rows == 0 {
+		return 0
+	}
+	if rows == 1 {
+		return sum(grid[0])
+	}
+	columns := len(grid[0])
+	dirs := [][]int{{1, 0}, {0, 1}}
+	path := make([]int, 0)
+	min := math.MaxInt
+	var dfs func(grid [][]int, i, j int)
+	dfs = func(grid [][]int, i, j int) {
+		// 此时的sum 其实漏了最后一个元素
+		if i == rows-1 && j == columns-1 {
+			sum := sum(path)
+			if min > sum {
+				min = sum
+			}
+			return
+		}
+		path = append(path, grid[i][j])
+		for _, dir := range dirs {
+			nx := i + dir[0]
+			ny := j + dir[1]
+			fmt.Println(i, j, nx, ny)
+			if nx < 0 || nx >= rows {
+				continue
+			}
+			if ny < 0 || ny >= columns {
+				continue
+			}
+			dfs(grid, nx, ny)
+		}
+		path = path[:len(path)-1]
+	}
+	dfs(grid, 0, 0)
+	return min + grid[rows-1][columns-1]
 }
 
 func minPathSum2(grid [][]int) int {

@@ -1,6 +1,8 @@
 package array
 
-import "math"
+import (
+	"math"
+)
 
 func MaxSubArray(nums []int) int {
 	return maxSubArray(nums)

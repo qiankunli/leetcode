@@ -1,6 +1,8 @@
 package array
 
-import "math"
+import (
+	"math"
+)
 
 // 1155
 

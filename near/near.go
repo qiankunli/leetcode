@@ -40,6 +40,7 @@ func near(nums []int, target int, num int) {
 }
 
 // 这靠面试现场肯定搞不定
+// 从暴力回溯出发，优化点1：仅选择比当前位 等于或小于的数字，但这个优化点要注意，如果找不到，当前位不选，后面的就直接由最大的数字填充了
 // preEq 前面是否都是相等的，index 当前遍历到哪了
 func near2(nums []int, targetNums []int, preEq bool, index int) int {
 	if index >= len(targetNums) {
@@ -59,6 +60,7 @@ func near2(nums []int, targetNums []int, preEq bool, index int) int {
 			}
 		}
 		// 从nums 中没找到数字
+		// ...
 		if index == 0 { // 第一个数字无法满足
 			return near2(nums, targetNums, false, index+1)
 		}

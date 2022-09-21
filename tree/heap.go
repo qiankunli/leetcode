@@ -82,8 +82,3 @@ func fixDown(array []int, i int) {
 	fixDown(array, parent)
 
 }
-func swap(array []int, x, y int) {
-	tmp := array[x]
-	array[x] = array[y]
-	array[y] = tmp
-}
