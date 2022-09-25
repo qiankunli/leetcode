@@ -1,8 +1,36 @@
 package linkedlist
 
 func MergeTwoLists(list1 *ListNode, list2 *ListNode) *ListNode {
-	return mergeTwoLists(list1, list2)
+	return mergeTwoLists2(list1, list2)
 }
+
+func mergeTwoLists2(l1 *ListNode, l2 *ListNode) *ListNode {
+	h := &ListNode{}
+	tmp, tmp1, tmp2 := h, l1, l2
+	for tmp1 != nil && tmp2 != nil {
+		if tmp1.Val < tmp2.Val {
+			tmp.Next = tmp1
+			tmp1 = tmp1.Next
+		} else {
+			tmp.Next = tmp2
+			tmp2 = tmp2.Next
+		}
+		tmp = tmp.Next
+	}
+	// tmp1 和 tmp2 可能没有用完
+	for tmp1 != nil {
+		tmp.Next = tmp1
+		tmp1 = tmp1.Next
+		tmp = tmp.Next
+	}
+	for tmp2 != nil {
+		tmp.Next = tmp2
+		tmp2 = tmp2.Next
+		tmp = tmp.Next
+	}
+	return h.Next
+}
+
 func mergeTwoLists(list1 *ListNode, list2 *ListNode) *ListNode {
 	head := &ListNode{}
 	cur := head

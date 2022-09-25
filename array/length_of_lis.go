@@ -9,6 +9,7 @@ func LengthOfLIS(nums []int) int {
 }
 
 // 300
+// 因为不连续，所以不能用滑动窗口
 func lengthOfLIS(nums []int) int {
 	n := len(nums)
 	if n == 0 {

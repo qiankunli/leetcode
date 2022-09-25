@@ -5,9 +5,12 @@ func LowestCommonAncestor(root, p, q *TreeNode) *TreeNode {
 }
 
 // 236
-// 后序遍历
+// 思路是： 分场景，左右子树，都在一个子树上。需要先知道左右子树的情况，才能对特定场景进行处理，所以妥妥的后序遍历。
 // 在root 里寻找 p 或q 如果找到则返回。以root 的视角看，如果pq 都在左子树，不管是p 还是q ，先找的的就是 最近公共祖先。
 // 如果一个在左 一个在右，根就是root
+
+//  lowestCommonAncestor这个函数不要理解为找公共祖先
+// 这里的主要困惑点在于：这样最终能得到 LCA 吗？
 func lowestCommonAncestor(root, p, q *TreeNode) *TreeNode {
 	if root == nil {
 		return nil
@@ -28,6 +31,9 @@ func lowestCommonAncestor(root, p, q *TreeNode) *TreeNode {
 	}
 	return root // 左右都找到了， 公共是根
 }
+
+// 比较顺的思路是，findCount(root,p,q) 寻找root 下 命中pq 的数量，=2 就root 继续下探，=1 =0 表示root 里没有
+// 但是findC 比较复杂，本身还要回溯
 
 // 之所以麻烦，之所以不好理解，就是没有掌握后序遍历，下面代码的本质是中序遍历
 func doLowestCommonAncestor(root, p, q *TreeNode) (*TreeNode, int) {

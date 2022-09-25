@@ -6,8 +6,43 @@ import (
 )
 
 func LengthOfLongestSubstring(s string) int {
-	return lengthOfLongestSubstring(s)
+	return lengthOfLongestSubstring3(s)
 }
+
+// 3
+
+func lengthOfLongestSubstring3(s string) int {
+	n := len(s)
+	if n == 0 {
+		return 0
+	}
+	if n == 1 {
+		return 1
+	}
+
+	l := 0
+	r := 0
+	max := 0
+	cache := make(map[string]int, 0)
+
+	for l <= r && r < n {
+		cr := s[r : r+1]
+		for cache[cr] > 0 { // l移到重复的字符后面
+			cl := s[l : l+1]
+			cache[cl]--
+			l++
+		}
+		cache[cr] = 1
+		if max < r-l+1 {
+			max = r - l + 1
+		}
+		r++
+	}
+
+	return max
+
+}
+
 func lengthOfLongestSubstring(s string) int {
 	if len(s) == 0 {
 		return 0

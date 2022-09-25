@@ -6,6 +6,7 @@ func TrimBST(root *TreeNode, a, b int) *TreeNode {
 }
 
 // 669
+// [a,b] 范围内的节点要么在左子树，要么在右子树，要么横跨根节点。前两者 直接删掉根及另一个子树，返回当前子树的根。后者则是删掉子树的下身。
 func trimBST(root *TreeNode, a, b int) *TreeNode {
 	if root == nil {
 		return nil
