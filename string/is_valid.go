@@ -4,7 +4,16 @@ func IsValid(s string) bool {
 	return isValid(s)
 }
 
+// 20  有效的括号
+// 没事手撸一下
 func isValid(s string) bool {
+
+	// 用栈，碰到左就进栈，碰到右就出栈（栈顶还得一样）
+	return false
+
+}
+
+func isValid2(s string) bool {
 	if len(s) <= 1 {
 		return false
 	}

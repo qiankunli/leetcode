@@ -5,7 +5,7 @@ import (
 )
 
 func LengthOfLIS(nums []int) int {
-	return lengthOfLIS(nums)
+	return lengthOfLIS3(nums)
 }
 
 // 300
@@ -27,6 +27,35 @@ func lengthOfLIS(nums []int) int {
 		}
 	}
 	return dp[n-1]
+}
+
+// 没事手搓一下
+func lengthOfLIS3(nums []int) int {
+	n := len(nums)
+	if n == 0 {
+		return 0
+	}
+	dp := make([]int, n)
+	dp[0] = 1
+	for i := 1; i < n; i++ {
+
+		// 找到 [0,i) 的dp 最大值
+		max := 0
+		for j := 0; j < i; j++ {
+			if max < dp[j] && nums[i] > nums[j] {
+				max = dp[j]
+			}
+		}
+		dp[i] = max + 1
+	}
+	// dp[i] 表示以nums[i] 结尾的最长子序列的最大值，真正的最大值要遍历看下
+	max := 0
+	for i := 0; i < n; i++ {
+		if max < dp[i] {
+			max = dp[i]
+		}
+	}
+	return max
 }
 
 // 超时了

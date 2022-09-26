@@ -4,6 +4,7 @@ func PruneTree(root *TreeNode) *TreeNode {
 	return pruneTree(root)
 }
 
+// 047 二叉树剪枝
 func pruneTree(root *TreeNode) *TreeNode {
 	if root == nil {
 		return nil

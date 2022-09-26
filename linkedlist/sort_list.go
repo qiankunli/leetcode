@@ -10,7 +10,7 @@ func sortList(head *ListNode) *ListNode {
 }
 
 // tail 不算的
-// sort 干的唯一的活儿就是拆，排序在merge 里做
+// sort 干的唯一的活儿就是拆，排序在merge 里做。归并排序的切分方式是取中点
 func sort(head, tail *ListNode) *ListNode {
 	if head == nil {
 		return head
@@ -29,6 +29,8 @@ func sort(head, tail *ListNode) *ListNode {
 		}
 	}
 	mid := slow
+
+	// 排序底层是依次进行的，所以不用担心会断
 	return merge(sort(head, mid), sort(mid, tail))
 }
 func merge(head1, head2 *ListNode) *ListNode {
