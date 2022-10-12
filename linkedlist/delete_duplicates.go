@@ -6,7 +6,7 @@ func deleteDuplicates(head *ListNode) *ListNode {
 
 	dummy := &ListNode{Next: head}
 	p := head
-	q := dummy // 作为p 前面的节点
+	pre := dummy // 作为p 前面的节点
 	for p != nil {
 		cur := p.Next
 		// 往下找，直到找到与p 值不同的节点
@@ -17,10 +17,10 @@ func deleteDuplicates(head *ListNode) *ListNode {
 			cur = cur.Next
 		}
 		if cur == p.Next { // p 后实际上没重复
-			q = p
+			pre = p
 			p = p.Next
 		} else { // p后有重复
-			q.Next = cur
+			pre.Next = cur
 			p = cur
 		}
 	}

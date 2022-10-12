@@ -4,6 +4,7 @@ func InvertTree(root *TreeNode) *TreeNode {
 	return invertTree(root)
 }
 
+// 226
 func invertTree(root *TreeNode) *TreeNode {
 	left := root.Left
 	rigth := root.Right

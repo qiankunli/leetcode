@@ -10,6 +10,7 @@ func pathSum2(root *TreeNode, targetSum int) int {
 		return 0
 	}
 
+	// 在当前节点必须作为 targetSum 一部分的情况下， 有几个路径
 	var dfs func(root *TreeNode, targetSum int) int
 	dfs = func(root *TreeNode, targetSum int) int {
 		if root == nil {
@@ -32,6 +33,8 @@ func pathSum2(root *TreeNode, targetSum int) int {
 }
 
 // 错误例子
+// 暴力法，用一个path 跟踪从 根节点到叶子的路径，这样 问题转变成 从一个 array 中找一个连续子序列 和为xx
+// 暴力法优化，可以分治下：targetSum 里有根节点，targetSum 里没有根节点。
 func pathSum3(root *TreeNode, targetSum int) int {
 	if root == nil {
 		return 0

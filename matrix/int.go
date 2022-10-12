@@ -21,6 +21,12 @@ func min(l, r int) int {
 	}
 	return r
 }
+func min3(l, r, rr int) int {
+	if l < r {
+		return min(l, rr)
+	}
+	return min(r, rr)
+}
 func abs(l int) int {
 	if l < 0 {
 		return -l

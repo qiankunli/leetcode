@@ -10,7 +10,6 @@ func LengthOfLongestSubstring(s string) int {
 }
 
 // 3
-
 func lengthOfLongestSubstring3(s string) int {
 	n := len(s)
 	if n == 0 {

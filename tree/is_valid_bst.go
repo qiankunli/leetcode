@@ -6,6 +6,7 @@ func IsValidBST(root *TreeNode) bool {
 	return isValidBST(root)
 }
 
+// 98
 // 0405
 func isValidBST(root *TreeNode) bool {
 

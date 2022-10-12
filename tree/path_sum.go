@@ -5,6 +5,7 @@ func PathSum(root *TreeNode, targetSum int) [][]int {
 }
 
 // 113
+// 34
 func pathSum(root *TreeNode, targetSum int) [][]int {
 
 	if root == nil { // 遍历完了
@@ -32,5 +33,35 @@ func pathSum(root *TreeNode, targetSum int) [][]int {
 	}
 
 	dfs(root, targetSum)
+	return result
+}
+
+func pathSum4(root *TreeNode, target int) [][]int {
+	if root == nil {
+		return nil
+	}
+	path := make([]int, 0)
+	result := make([][]int, 0)
+	var dfs func(root *TreeNode, target int)
+	dfs = func(root *TreeNode, target int) {
+		if root == nil {
+			return
+		}
+		if root.Left == nil && root.Right == nil { // 到叶子节点 只能在叶子节点加到path，不然会被加两边
+			if target == root.Val {
+				pathCopy := make([]int, len(path))
+				copy(pathCopy, path)
+				pathCopy = append(pathCopy, root.Val)
+				result = append(result, pathCopy)
+			}
+			return
+		}
+
+		path = append(path, root.Val)
+		dfs(root.Left, target-root.Val)
+		dfs(root.Right, target-root.Val)
+		path = path[:len(path)-1]
+	}
+	dfs(root, target)
 	return result
 }

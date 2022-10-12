@@ -5,6 +5,34 @@ func Search(nums []int, target int) int {
 }
 
 // 33
+
+// 加了一个先判断  左右  子区间是否是递增区间的逻辑
+func search3(nums []int, target int) int {
+	n := len(nums)
+	l := 0
+	r := n
+	for l <= r {
+		mid := (l + r) / 2
+		if nums[mid] == target {
+			return mid
+		}
+		if nums[l] <= nums[mid] { // l mid  在递增区间
+			if target >= nums[l] && target <= nums[mid] {
+				r = mid - 1
+			} else {
+				l = mid + 1
+			}
+		} else { // mid r 在递增区间
+			if target >= nums[mid] && target <= nums[r] {
+				l = mid + 1
+			} else {
+				r = mid - 1
+			}
+		}
+	}
+	return -1
+}
+
 func search(nums []int, target int) int {
 	return kSearch(nums, 0, len(nums)-1, target)
 }

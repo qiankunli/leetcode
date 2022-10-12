@@ -5,6 +5,53 @@ func ReverseKGroup(head *ListNode, k int) *ListNode {
 }
 
 // 25
+
+// 没事手撸一下
+func reverseKGroup4(head *ListNode, k int) *ListNode {
+	// 首先得有一个基本函数 reverse(head,tail), 负责反转[head,tail)，且确保反转后list 没断，一次反转k个，反转完再弄下一个批次
+
+	dummy := &ListNode{Next: head}
+	pre := dummy // 指向子链前一个节点
+	h := head    // 指向子链第一个节点
+	t := head    // 指向子链第一个节点，移动后指向最后一个节点的下一个节点
+
+	for {
+		// t 后移 k个位置
+		i := 0
+		for i < k {
+			if t == nil { // 碰到了尾部
+				break
+			}
+			t = t.Next
+			i++
+		}
+		if i < k { // 长度不够，提前结束
+			break
+		}
+		newH := reverseTail(h, t) // h 指向t， 返回新的 head
+		pre.Next = newH           // 串联反转后的子链
+		pre = h                   // 指向下一个k 子链的前一个节点
+		next := h.Next
+		t = next // 指向子链第一个节点，移动后指向最后一个节点的下一个节点
+		h = next
+
+	}
+	return dummy.Next
+}
+
+// 反转head 和 tail（不包含tail），返回最新的head，且新的尾节点可以连接tail
+func reverseTail(head, tail *ListNode) *ListNode {
+	pre := tail
+	cur := head
+	for cur != tail {
+		next := cur.Next
+		cur.Next = pre
+		pre = cur
+		cur = next
+	}
+	return pre
+}
+
 // 核心是想到  reverseWithTail 方法，剩下的技术拼凑  reverseWithTail 所需的参数
 func reverseKGroup(head *ListNode, k int) *ListNode {
 
