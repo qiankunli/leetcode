@@ -1,4 +1,4 @@
-package near
+package digit
 
 import (
 	"math"
@@ -45,4 +45,3 @@ func dfs(nums []int, array []int, idx int, preEqual bool) int {
 	// preEqual = true ，但是这一轮没有找到 小于 array[idx] 的数，说过这个路径走不通
 	return -1
 }
-

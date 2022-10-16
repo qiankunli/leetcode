@@ -1,4 +1,4 @@
-package near
+package digit
 
 import (
 	"fmt"
