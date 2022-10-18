@@ -1,7 +1,7 @@
 package tree
 
 func LowestCommonAncestor(root, p, q *TreeNode) *TreeNode {
-	return lowestCommonAncestor(root, p, q)
+	return lowestCommonAncestor2(root, p, q)
 }
 
 // 236
@@ -61,4 +61,27 @@ func doLowestCommonAncestor(root, p, q *TreeNode) (*TreeNode, int) {
 		return root, 2
 	}
 	return root, count + lc + rc
+}
+
+func lowestCommonAncestor2(root, p, q *TreeNode) *TreeNode {
+	// pq 都在一边；pq 在两边 此时返回根
+	var dfs func(root, p, q *TreeNode) *TreeNode
+	dfs = func(root, p, q *TreeNode) *TreeNode {
+		if root == nil {
+			return nil
+		}
+		if root == p || root == q {
+			return root
+		}
+		l := dfs(root.Left, p, q)
+		r := dfs(root.Right, p, q)
+		if l != nil && r != nil {
+			return root
+		}
+		if l == nil {
+			return r
+		}
+		return l
+	}
+	return dfs(root, p, q)
 }

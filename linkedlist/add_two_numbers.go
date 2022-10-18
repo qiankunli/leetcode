@@ -40,3 +40,42 @@ func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 	}
 	return head.Next
 }
+
+// 2
+func addTwoNumbers2(l1 *ListNode, l2 *ListNode) *ListNode {
+	if l1 == nil {
+		return l2
+	}
+	if l2 == nil {
+		return l1
+	}
+	cur1 := l1
+	cur2 := l2
+	dummy := &ListNode{}
+	cur := dummy
+	extra := 0
+	for cur1 != nil || cur2 != nil {
+		var v1, v2 int
+		if cur1 != nil {
+			v1 = cur1.Val
+			cur1 = cur1.Next
+		}
+		if cur2 != nil {
+			v2 = cur2.Val
+			cur2 = cur2.Next
+		}
+		v := v1 + v2 + extra
+		if v >= 10 {
+			extra = 1
+		} else {
+			extra = 0
+		}
+		node := &ListNode{Val: v % 10}
+		cur.Next = node
+		cur = node
+	}
+	if extra == 1 {
+		cur.Next = &ListNode{Val: 1}
+	}
+	return dummy.Next
+}

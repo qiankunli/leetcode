@@ -1,4 +1,4 @@
-package graph
+package matrix
 
 // 695
 func maxAreaOfIsland(grid [][]int) int {
