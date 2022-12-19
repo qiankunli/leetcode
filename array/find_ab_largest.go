@@ -53,6 +53,7 @@ func doFindABLargest(nums []int, start, end, a, b int) {
 }
 
 // 错误
+// 极端情况下，哨兵值可能是最大值 或最小值，则 递归是传参就没办法弄了，接下来就会栈溢出
 func doFindABLargest2(nums []int, start, end, a, b int) {
 
 	if end <= start {
@@ -73,8 +74,7 @@ func doFindABLargest2(nums []int, start, end, a, b int) {
 			nums[l], nums[r] = nums[r], nums[l]
 		}
 	}
-	// 此时 l ==r  不能保证 [start,l] 都<= pv  因为r 可能会越过 p , lr  在p 左侧进行交换，左侧还是有比p 大的数
-	// 且 nums[l] 跟 pv 关系不确定
+	// 此时 l ==r   [start,l] 都<= pv  但是l 可能在p 左侧或右侧
 
 	if l > b {
 		doFindABLargest2(nums, start, l, a, b)

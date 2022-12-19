@@ -37,6 +37,8 @@ func doFindKthLargest(nums []int, start, end, k int) int {
 	}
 }
 
+// 错误
+// 极端情况下，哨兵值可能是最大值 或最小值，则 递归是传参就没办法弄了，接下来就会栈溢出
 func doFindKthLargest2(nums []int, start, end, k int) int {
 	if start == end {
 		return nums[start]
